@@ -8,6 +8,14 @@ class ApiClient {
       ? process.env.NEXT_PUBLIC_API_URL_PRODUCTION 
       : process.env.NEXT_PUBLIC_API_URL;
 
+    // Debug: Log de configuración
+    console.log('🔧 API Client Configuration:', {
+      NODE_ENV: process.env.NODE_ENV,
+      NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+      NEXT_PUBLIC_API_URL_PRODUCTION: process.env.NEXT_PUBLIC_API_URL_PRODUCTION,
+      selectedBaseURL: baseURL
+    });
+
     this.client = axios.create({
       baseURL,
       timeout: 10000,
@@ -19,6 +27,14 @@ class ApiClient {
     // Request interceptor para agregar token de autorización
     this.client.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
+        // Debug: Log de la request
+        console.log('🔍 API Request:', {
+          method: config.method?.toUpperCase(),
+          url: `${config.baseURL || ''}${config.url || ''}`,
+          headers: config.headers,
+          data: config.data
+        });
+        
         const token = this.getAuthToken();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
@@ -30,8 +46,24 @@ class ApiClient {
 
     // Response interceptor para manejar errores globales
     this.client.interceptors.response.use(
-      (response: AxiosResponse) => response,
+      (response: AxiosResponse) => {
+        // Debug: Log de la response exitosa
+        console.log('✅ API Response:', {
+          status: response.status,
+          statusText: response.statusText,
+          data: response.data
+        });
+        return response;
+      },
       (error: AxiosError) => {
+        // Debug: Log del error
+        console.error('❌ API Error:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message
+        });
+        
         if (error.response?.status === 401) {
           // Solo limpiar y redirigir si no estamos haciendo login
           const isLoginRequest = error.config?.url?.includes('/auth/login');
