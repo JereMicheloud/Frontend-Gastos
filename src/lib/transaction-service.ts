@@ -14,7 +14,7 @@ export class TransactionService {
    * Obtener todas las transacciones del usuario con filtros opcionales
    */
   static async getTransactions(filters?: TransactionFilters): Promise<Transaction[]> {
-    const response = await apiClient.get<ApiResponse<Transaction[]>>('/api/transactions', filters);
+    const response = await apiClient.get<ApiResponse<Transaction[]>>('/transactions', filters);
     
     if (response.success && response.data) {
       return response.data;
@@ -27,7 +27,7 @@ export class TransactionService {
    * Obtener una transacción específica por ID
    */
   static async getTransaction(id: string): Promise<Transaction> {
-    const response = await apiClient.get<ApiResponse<Transaction>>(`/api/transactions/${id}`);
+    const response = await apiClient.get<ApiResponse<Transaction>>(`/transactions/${id}`);
     
     if (response.success && response.data) {
       return response.data;
@@ -40,7 +40,7 @@ export class TransactionService {
    * Crear nueva transacción
    */
   static async createTransaction(data: TransactionForm): Promise<Transaction> {
-    const response = await apiClient.post<ApiResponse<Transaction>>('/api/transactions', data);
+    const response = await apiClient.post<ApiResponse<Transaction>>('/transactions', data);
     
     if (response.success && response.data) {
       return response.data;
@@ -53,7 +53,7 @@ export class TransactionService {
    * Actualizar transacción existente
    */
   static async updateTransaction(id: string, data: Partial<TransactionForm>): Promise<Transaction> {
-    const response = await apiClient.put<ApiResponse<Transaction>>(`/api/transactions/${id}`, data);
+    const response = await apiClient.put<ApiResponse<Transaction>>(`/transactions/${id}`, data);
     
     if (response.success && response.data) {
       return response.data;
@@ -66,7 +66,7 @@ export class TransactionService {
    * Eliminar transacción
    */
   static async deleteTransaction(id: string): Promise<void> {
-    const response = await apiClient.delete<ApiResponse<null>>(`/api/transactions/${id}`);
+    const response = await apiClient.delete<ApiResponse<null>>(`/transactions/${id}`);
     
     if (!response.success) {
       throw new Error(response.message || 'Error al eliminar transacción');
@@ -78,7 +78,7 @@ export class TransactionService {
    */
   static async getStats(period?: string): Promise<TransactionStats> {
     const params = period ? { period } : undefined;
-    const response = await apiClient.get<ApiResponse<TransactionStats>>('/api/transactions/stats', params);
+    const response = await apiClient.get<ApiResponse<TransactionStats>>('/transactions/stats', params);
     
     if (response.success && response.data) {
       return response.data;
@@ -92,7 +92,7 @@ export class TransactionService {
    */
   static async getMonthlyTrends(months?: number): Promise<MonthlyTrend[]> {
     const params = months ? { months } : undefined;
-    const response = await apiClient.get<ApiResponse<MonthlyTrend[]>>('/api/transactions/trends', params);
+    const response = await apiClient.get<ApiResponse<MonthlyTrend[]>>('/transactions/trends', params);
     
     if (response.success && response.data) {
       return response.data;
@@ -106,7 +106,7 @@ export class TransactionService {
    */
   static async getCategoryStats(period?: string): Promise<CategoryStats[]> {
     const params = period ? { period } : undefined;
-    const response = await apiClient.get<ApiResponse<CategoryStats[]>>('/api/transactions/category-stats', params);
+    const response = await apiClient.get<ApiResponse<CategoryStats[]>>('/transactions/category-stats', params);
     
     if (response.success && response.data) {
       return response.data;

@@ -10,7 +10,7 @@ export class CategoryService {
    * Obtener todas las categorías del usuario
    */
   static async getCategories(): Promise<Category[]> {
-    const response = await apiClient.get<ApiResponse<Category[]>>('/api/categories');
+    const response = await apiClient.get<ApiResponse<Category[]>>('/categories');
     
     if (response.success && response.data) {
       return response.data;
@@ -23,7 +23,7 @@ export class CategoryService {
    * Obtener una categoría específica por ID
    */
   static async getCategory(id: string): Promise<Category> {
-    const response = await apiClient.get<ApiResponse<Category>>(`/api/categories/${id}`);
+    const response = await apiClient.get<ApiResponse<Category>>(`/categories/${id}`);
     
     if (response.success && response.data) {
       return response.data;
@@ -36,7 +36,7 @@ export class CategoryService {
    * Crear nueva categoría
    */
   static async createCategory(data: CategoryForm): Promise<Category> {
-    const response = await apiClient.post<ApiResponse<Category>>('/api/categories', data);
+    const response = await apiClient.post<ApiResponse<Category>>('/categories', data);
     
     if (response.success && response.data) {
       return response.data;
@@ -49,7 +49,7 @@ export class CategoryService {
    * Actualizar categoría existente
    */
   static async updateCategory(id: string, data: Partial<CategoryForm>): Promise<Category> {
-    const response = await apiClient.put<ApiResponse<Category>>(`/api/categories/${id}`, data);
+    const response = await apiClient.put<ApiResponse<Category>>(`/categories/${id}`, data);
     
     if (response.success && response.data) {
       return response.data;
@@ -62,7 +62,7 @@ export class CategoryService {
    * Eliminar categoría
    */
   static async deleteCategory(id: string): Promise<void> {
-    const response = await apiClient.delete<ApiResponse<null>>(`/api/categories/${id}`);
+    const response = await apiClient.delete<ApiResponse<null>>(`/categories/${id}`);
     
     if (!response.success) {
       throw new Error(response.message || 'Error al eliminar categoría');
@@ -73,7 +73,7 @@ export class CategoryService {
    * Obtener categorías por defecto del sistema
    */
   static async getDefaultCategories(): Promise<Category[]> {
-    const response = await apiClient.get<ApiResponse<Category[]>>('/api/categories/defaults');
+    const response = await apiClient.get<ApiResponse<Category[]>>('/categories/defaults');
     
     if (response.success && response.data) {
       return response.data;
@@ -86,7 +86,7 @@ export class CategoryService {
    * Crear categorías por defecto para un usuario nuevo
    */
   static async createDefaultCategories(): Promise<Category[]> {
-    const response = await apiClient.post<ApiResponse<Category[]>>('/api/categories/create-defaults');
+    const response = await apiClient.post<ApiResponse<Category[]>>('/categories/create-defaults');
     
     if (response.success && response.data) {
       return response.data;
@@ -144,7 +144,7 @@ export class CategoryService {
     try {
       // Esto requeriría un endpoint en el backend para verificar
       // Por ahora retornamos true, pero en producción debería verificar
-      const response = await apiClient.get<ApiResponse<{ canDelete: boolean }>>(`/api/categories/${id}/can-delete`);
+      const response = await apiClient.get<ApiResponse<{ canDelete: boolean }>>(`/categories/${id}/can-delete`);
       return response.data?.canDelete ?? true;
     } catch {
       // Si no existe el endpoint, asumimos que se puede eliminar

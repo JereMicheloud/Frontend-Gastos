@@ -10,7 +10,7 @@ export class BudgetService {
    * Obtener todos los presupuestos del usuario
    */
   static async getBudgets(): Promise<Budget[]> {
-    const response = await apiClient.get<ApiResponse<Budget[]>>('/api/budgets');
+    const response = await apiClient.get<ApiResponse<Budget[]>>('/budgets');
     
     if (response.success && response.data) {
       return response.data;
@@ -23,7 +23,7 @@ export class BudgetService {
    * Obtener un presupuesto específico por ID
    */
   static async getBudget(id: string): Promise<Budget> {
-    const response = await apiClient.get<ApiResponse<Budget>>(`/api/budgets/${id}`);
+    const response = await apiClient.get<ApiResponse<Budget>>(`/budgets/${id}`);
     
     if (response.success && response.data) {
       return response.data;
@@ -36,7 +36,7 @@ export class BudgetService {
    * Crear nuevo presupuesto
    */
   static async createBudget(data: BudgetForm): Promise<Budget> {
-    const response = await apiClient.post<ApiResponse<Budget>>('/api/budgets', data);
+    const response = await apiClient.post<ApiResponse<Budget>>('/budgets', data);
     
     if (response.success && response.data) {
       return response.data;
@@ -49,7 +49,7 @@ export class BudgetService {
    * Actualizar presupuesto existente
    */
   static async updateBudget(id: string, data: Partial<BudgetForm>): Promise<Budget> {
-    const response = await apiClient.put<ApiResponse<Budget>>(`/api/budgets/${id}`, data);
+    const response = await apiClient.put<ApiResponse<Budget>>(`/budgets/${id}`, data);
     
     if (response.success && response.data) {
       return response.data;
@@ -62,7 +62,7 @@ export class BudgetService {
    * Eliminar presupuesto
    */
   static async deleteBudget(id: string): Promise<void> {
-    const response = await apiClient.delete<ApiResponse<null>>(`/api/budgets/${id}`);
+    const response = await apiClient.delete<ApiResponse<null>>(`/budgets/${id}`);
     
     if (!response.success) {
       throw new Error(response.message || 'Error al eliminar presupuesto');
@@ -73,7 +73,7 @@ export class BudgetService {
    * Obtener presupuestos activos (vigentes)
    */
   static async getActiveBudgets(): Promise<Budget[]> {
-    const response = await apiClient.get<ApiResponse<Budget[]>>('/api/budgets/active');
+    const response = await apiClient.get<ApiResponse<Budget[]>>('/budgets/active');
     
     if (response.success && response.data) {
       return response.data;
@@ -92,7 +92,7 @@ export class BudgetService {
     percentage: number;
     daysRemaining: number;
   }> {
-    const response = await apiClient.get<ApiResponse<any>>(`/api/budgets/${id}/analysis`);
+    const response = await apiClient.get<ApiResponse<any>>(`/budgets/${id}/analysis`);
     
     if (response.success && response.data) {
       return response.data;
@@ -111,7 +111,7 @@ export class BudgetService {
     total_remaining: number;
     over_budget_count: number;
   }> {
-    const response = await apiClient.get<ApiResponse<any>>('/api/budgets/summary');
+    const response = await apiClient.get<ApiResponse<any>>('/budgets/summary');
     
     if (response.success && response.data) {
       return response.data;

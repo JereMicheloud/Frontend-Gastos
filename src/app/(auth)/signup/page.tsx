@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { DevModeAlert } from "@/components/DevModeAlert";
 import { APP_ICON, APP_NAME } from "@/config/nav";
 import { useAuth } from "@/contexts/AuthContext";
 import { handleApiError } from "@/lib/api";
@@ -64,6 +65,7 @@ export default function SignupPage() {
 
   return (
     <Card className="w-full max-w-sm">
+      <DevModeAlert />
       <CardHeader className="text-center">
         <div className="inline-flex items-center justify-center gap-2 mb-4">
           <APP_ICON className="h-10 w-10 text-primary" />

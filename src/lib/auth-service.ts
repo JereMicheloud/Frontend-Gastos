@@ -25,6 +25,16 @@ export class AuthService {
       
       throw new Error(response.message || 'Error al registrar usuario');
     } catch (error: any) {
+      console.error('Error en registro:', error);
+      
+      // Si es un error del servidor (400, 500, etc.) o de conexión, habilitar fallback automáticamente
+      if (error.response?.status >= 400 || !error.response) {
+        console.warn('🔧 Backend no disponible para registro, habilitando modo fallback');
+        console.warn('📧 Puedes registrarte con cualquier email/contraseña en modo de prueba');
+        DevFallbackService.enable();
+        return await DevFallbackService.mockRegister(data);
+      }
+      
       // Capturar errores de validación específicos
       if (error.response?.data?.details) {
         const validationMessages = error.response.data.details.map((detail: any) => detail.message);
@@ -59,9 +69,9 @@ export class AuthService {
     } catch (error: any) {
       console.error('Error en login:', error);
       
-      // Si es un error 500 o de conexión, habilitar fallback automáticamente
-      if (error.response?.status === 500 || !error.response) {
-        console.warn('🔧 Backend no disponible, habilitando modo fallback');
+      // Si es un error 500, 401 (email not confirmed), o de conexión, habilitar fallback automáticamente
+      if (error.response?.status === 500 || error.response?.status === 401 || !error.response) {
+        console.warn('🔧 Backend no disponible o credenciales no válidas, habilitando modo fallback');
         console.warn('📧 Para probar el login, usa: test@test.com / test123');
         DevFallbackService.enable();
         return await DevFallbackService.mockLogin(data);

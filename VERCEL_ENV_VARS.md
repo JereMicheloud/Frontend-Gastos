@@ -2,8 +2,8 @@
 # Copia estas variables en el dashboard de Vercel (Settings > Environment Variables)
 
 # API Configuration
-NEXT_PUBLIC_API_URL=https://backend-gastos-v68j.onrender.com/api
-NEXT_PUBLIC_API_URL_PRODUCTION=https://backend-gastos-v68j.onrender.com/api
+NEXT_PUBLIC_API_URL=https://backend-gastos-v68j.onrender.com
+NEXT_PUBLIC_API_URL_PRODUCTION=https://backend-gastos-v68j.onrender.com
 
 # Environment
 NEXT_PUBLIC_NODE_ENV=production
