@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Test Login</h1>
+    <button onclick="testLogin()">Test Login</button>
+    <div id="result"></div>
+
+    <script>
+        async function testLogin() {
+            try {
+                console.log('Starting login test...');
+                
+                const response = await axios.post('http://localhost:3001/api/auth/login', {
+                    email: 'test@example.com',
+                    password: 'password123'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('Login successful:', response.data);
+                document.getElementById('result').innerHTML = 
+                    '<pre>' + JSON.stringify(response.data, null, 2) + '</pre>';
+                    
+                // Test access_token access
+                if (response.data && response.data.data && response.data.data.access_token) {
+                    console.log('✅ access_token found:', response.data.data.access_token.substring(0, 50) + '...');
+                } else {
+                    console.error('❌ access_token not found');
+                    console.log('Response structure:', response.data);
+                }
+                
+            } catch (error) {
+                console.error('Login failed:', error);
+                console.error('Error response:', error.response);
+                document.getElementById('result').innerHTML = 
+                    '<div style="color: red;">Error: ' + error.message + '</div>';
+            }
+        }
+    </script>
+</body>
+</html>
